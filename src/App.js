@@ -43,13 +43,12 @@ function App() {
   }
 
   const removeFromPokedex = (pokemonToRemove) => {
-    const nemPokedex = pokedex.filter(
+    const newPokedex = pokedex.filter(
       (pokemonInPokedex) => pokemonInPokedex.name !== pokemonToRemove.name
     )
-    console.log(nemPokedex)
+    // console.log(newPokedex)    
+    setPokedex(newPokedex)
     alert(`Oh, no! ${pokemonToRemove.name} foi removido da sua Pokedex` )
-
-    setPokedex(nemPokedex)
   }
 
   const savePokedex = () => {

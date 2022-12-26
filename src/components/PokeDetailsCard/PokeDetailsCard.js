@@ -1,13 +1,15 @@
 import {
+  Heading,
   Box,
+  Center,
   Flex,
   Text,
+  Stack,
   Button,
   Link,
+  useColorModeValue,
   Image,
-  Skeleton,
-  SkeletonCircle, 
-  SkeletonText
+  HStack,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -41,7 +43,7 @@ export default function PokemonCard({ urlPokemon, addToPokedex, removeFromPokede
   useEffect(() => {
     fetchCurrentPokemon()
     searchCardColor()
-  },[])
+  }, [])
   return (
     <Flex padding={'25px'}>
       <Box
@@ -62,7 +64,6 @@ export default function PokemonCard({ urlPokemon, addToPokedex, removeFromPokede
       >
 
         <Box flexGrow={1} align={'left'} justify={'space-between'} flexDirection={'column'} display={"flex"} >
-          <SkeletonText isLoaded mt='4' noOfLines={4} spacing='4' skeletonHeight='2' />
           <Text fontFamily='Inter' fontSize='16px' fontStyle="normal" fontWeight={'700'} lineHeight='19px' color='#FFFFFF'>
             #0{currentPokemon.id}
           </Text>
@@ -73,12 +74,11 @@ export default function PokemonCard({ urlPokemon, addToPokedex, removeFromPokede
             <Image src={currentPokemon.types && searchPokemonTypes(currentPokemon.types[0].type.name)} alt={''} />
             <Image src={currentPokemon.types && searchPokemonTypes(currentPokemon.types[1]?.type?.name)} alt={''} />
           </Box>
-          <Link onClick={() => goToDetailPage(navigate)} fontFamily='Inter' fontSize='16px' fontStyle="normal" fontWeight={'700'} lineHeight='24px' color='#FFFFFF' textDecoration={'underline'}>
+          <Link onClick={() => goToDetailPage(navigate, currentPokemon.name)} fontFamily='Inter' fontSize='16px' fontStyle="normal" fontWeight={'700'} lineHeight='24px' color='#FFFFFF' textDecoration={'underline'}>
             Detalhes
           </Link>
         </Box>
         <Box flexGrow={1} display={'flex'} >
-          <SkeletonCircle isLoaded size={'10'} />
           <Image
             boxSize={193}
             position="absolute"
@@ -117,7 +117,9 @@ export default function PokemonCard({ urlPokemon, addToPokedex, removeFromPokede
               fontWeight={400}
               lineHeight='24px'
               rounded={'8px'}
+              // bg={'#FF6262'}
               colorScheme='red'
+              // color={'#0F0F0F'}
               >
               Excluir
             </Button>
