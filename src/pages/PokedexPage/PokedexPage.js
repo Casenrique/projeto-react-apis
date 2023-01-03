@@ -13,10 +13,12 @@ const PokedexPage = () => {
     <>
       <Header/>
       <ContainerCards>
-      {pokedex.map((pokemon) => (
+      {
+      pokedex
+      .map((pokemon) => (
         <PokemonCard 
-        key={pokemon.name}
-        urlPokemon={`${BASE_URL}/${pokemon.name}`}
+        key={pokemon}
+        urlPokemon={`${BASE_URL}/pokemon/${pokemon}`}
         removeFromPokedex={removeFromPokedex}
         />
       )

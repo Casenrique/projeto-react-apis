@@ -4,17 +4,35 @@ import Header from '../../components/Header/Header'
 import { GlobalContext } from '../../contexts/GlobalContext'
 import PokeDetailsCard from '../../components/PokeDetailsCard/PokeDetailsCard'
 import { ContainerCard } from '../PokemonDetailPage/PokemonDetailPage.Style'
+import { useParams } from 'react-router-dom';
 
 const PokemonDetailPage = () => {
 const context = useContext(GlobalContext)
-const { removeFromPokedex } = context
+const { pokelist, pokedex, setPokedex, addToPokedex, removeFromPokedex } = context
+const params = useParams()
+
+const addIfisNotInPokedex = (pokemonToAdd) => {
+
+  const newPokedex = [...pokedex]
+  const pokemonSearch = newPokedex.find(
+    (pokemonInPokedex) => pokemonInPokedex.name === pokemonToAdd.name
+  )
+    if(!pokemonSearch) {
+      const newPokedex = [...pokedex, pokemonToAdd]
+      setPokedex(newPokedex)
+    }
+  }
 
   return (
     <>
-          <Header/>
+          <Header
+          addToPokedex={addToPokedex}
+          removeFromPokedex={removeFromPokedex}
+          />
           <ContainerCard>
-            <Heading>DETALHES</Heading>
-            <PokeDetailsCard />
+            <Heading alignSelf={'flex-start'} mt={8} p={16} ml={10} fontSize={"5xl"} fontFamily={'Poppins'} color={'white'} >Detalhes</Heading>
+            
+                <PokeDetailsCard />
           </ContainerCard>
     </>
   )

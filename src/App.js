@@ -18,7 +18,7 @@ function App() {
 
   const fetchPokemonList = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/?limit=20`, 
+      const response = await axios.get(`${BASE_URL}/pokemon/?limit=20&offset=150`, 
       // const response = await axios.get(`${BASE_URL}/?limit=150&offset=150`, 
       )
       console.log(response.data)
@@ -30,25 +30,25 @@ function App() {
   } 
   const addToPokedex = (pokemonToAdd) => {
     const pokemonSearchOnPokedex = pokedex.find(
-      (pokemonInPokedex) => pokemonInPokedex.name === pokemonToAdd.name
+      (pokemonInPokedex) => pokemonInPokedex.name === pokemonToAdd
     )
     if(!pokemonSearchOnPokedex) {
         const newPokedex = [...pokedex, pokemonToAdd]
         setPokedex(newPokedex)
     }
     console.log(pokedex)
-    alert(`Gotcha! ${pokemonToAdd.name} foi adicionado à sua Pokedex` )
+    alert(`Gotcha! ${pokemonToAdd} foi adicionado à sua Pokedex` )
     const pokedexStringify = JSON.stringify(pokedex)
     window.localStorage.setItem('pokemons', pokedexStringify)
   }
 
   const removeFromPokedex = (pokemonToRemove) => {
     const newPokedex = pokedex.filter(
-      (pokemonInPokedex) => pokemonInPokedex.name !== pokemonToRemove.name
+      (pokemonInPokedex) => pokemonInPokedex !== pokemonToRemove
     )
-    // console.log(newPokedex)    
+    console.log(newPokedex)    
     setPokedex(newPokedex)
-    alert(`Oh, no! ${pokemonToRemove.name} foi removido da sua Pokedex` )
+    alert(`Oh, no! ${pokemonToRemove} foi removido da sua Pokedex` )
   }
 
   const savePokedex = () => {
@@ -62,8 +62,6 @@ function App() {
   useEffect(()=> {
     savePokedex()
   },[])
-
-
     
   const context = {
     pokelist: pokelist,
@@ -72,13 +70,14 @@ function App() {
     setPokedex,
     addToPokedex,
     removeFromPokedex,
+    BASE_URL,
   }
 
-  console.log(context)
+  // console.log(context)
 
   return (
     <GlobalContext.Provider value={context} >
-      <ChakraProvider>
+      <ChakraProvider resetCSS>
         <Router/>
       </ChakraProvider>
     </GlobalContext.Provider>

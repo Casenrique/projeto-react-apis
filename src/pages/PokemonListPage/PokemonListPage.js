@@ -18,7 +18,7 @@ const PokemonListPage = () => {
       pokelist
       .filter((pokemon) => (
         !pokedex.find(
-          (pokemonInPokedex) => pokemon.name === pokemonInPokedex.name
+          (pokemonInPokedex) => pokemon.name === pokemonInPokedex
           
       )))
       .map((pokemon) => (

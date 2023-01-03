@@ -8,5 +8,5 @@ export const goToPokedexPage = (navigate) => {
 
 export const goToDetailPage = (navigate, pokemonName) => {
     // navigate(`/${pokemonName}`)
-    navigate(`/details`)
+    navigate(`/details/${pokemonName}`)
 }
