@@ -1,87 +1,81 @@
-// import React from 'react'
-
-// const PokemonCard = () => {
-//   return (
-//     <div>PokemonCard</div>
-//   )
-// }
-
-// export default PokemonCard
-
 import {
-  Heading,
-  Avatar,
   Box,
-  Center,
   Flex,
   Text,
-  Stack,
   Button,
   Link,
-  useColorModeValue,
   Image,
-  HStack,
+  ScaleFade,
+  Skeleton  
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CardBackground from "../../assets/pokeball.svg"
 import { searchPokemonTypes } from '../../utils/SearchPokemonTypes';
 import { searchCardColor } from '../../utils/SearchCardColor';
 import { goToDetailPage } from '../../Router/coordinates';
+import { GlobalContext } from '../../contexts/GlobalContext';
+import { ModalCatch } from '../Modal/ModalCatch'
+import { ModalRelease } from '../Modal/ModalRelease';
 
 
 export default function PokemonCard({ urlPokemon, addToPokedex, removeFromPokedex }) {
 
   const [currentPokemon, setCurrentPokemon] = useState({})
+  const [ isLoading, setIsLoading ] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
 
-  
+  const context = useContext(GlobalContext)
+  // const { isOpen, setIsOpen, onClose } = context
+
   const fetchCurrentPokemon = async () => {
     try {
+      setIsLoading(true)
       const response = await axios.get(urlPokemon)
       console.log(response.data)
-      console.log(response.data.types[0].type.name)
-      console.log(response.data.types[1]?.type.name)
+      // console.log(response.data.types[0].type.name)
+      // console.log(response.data.types[1]?.type.name)
+      console.log(response.data.moves)
       setCurrentPokemon(response.data)
+      setIsLoading(false)
     } catch (error) {
+      setIsLoading(false)
       console.log("Problemas na busca da lista de pokemons")
       console.log(error)
     }
   }
-  
+
   useEffect(() => {
     fetchCurrentPokemon()
     searchCardColor()
   }, [])
   return (
+    <ScaleFade initialScale={0.9} in={true}>
     <Flex padding={'25px'}>
+    <Skeleton
+        isLoaded={!isLoading}
+        w={"100%"}
+        boxShadow={'2xl'}
+        rounded={'lg'}
+    >
       <Box
         maxW={'440px'}
         minW={'400px'}
         h={'210px'}
         marginTop={'50px'}
-        
-        // w={'full'} 
-        // bg={useColorModeValue('#70B873', 'gray.900')}
         boxShadow={'2xl'}
         rounded={'lg'}
         p={'16px'}
         display='flex'
         position={'relative'}
-        // bg={'#70B873'}
         bg={currentPokemon.types && searchCardColor(currentPokemon.types[0]?.type?.name)}
         bgImage={CardBackground}
         bgPosition={'right'}
         bgSize={"auto"}
         bgRepeat={"no-repeat"}
-      // textAlign={'center'}
-      // align={'center'}
-      // justifyContent={'flex-end'}
-      // flexDirection={'column'}
       >
-
         <Box flexGrow={1} align={'left'} justify={'space-between'} flexDirection={'column'} display={"flex"} >
           <Text fontFamily='Inter' fontSize='16px' fontStyle="normal" fontWeight={'700'} lineHeight='19px' color='#FFFFFF'>
             #0{currentPokemon.id}
@@ -107,46 +101,53 @@ export default function PokemonCard({ urlPokemon, addToPokedex, removeFromPokede
             alt={currentPokemon.name}
           />
           {location.pathname === "/" ? (
-            <Button
-              onClick={() => addToPokedex(currentPokemon)}
-              cursor={"pointer"}
-              width='100%'
-              alignSelf={'flex-end'}
-              // textAlign='center'
-              justifyContent={"center"}
-              fontSize={'16px'}
-              fontFamily='Poppins'
-              fontWeight={400}
-              lineHeight='24px'
-              rounded={'8px'}
-              color={'#0F0F0F'}
-              colorScheme='whiteAlpha'
+            <>
+              <Button
+                onClick={()=> addToPokedex(currentPokemon.name)
+                               
+                }
+                cursor={"pointer"}
+                width='100%'
+                alignSelf={'flex-end'}
+                justifyContent={"center"}
+                fontSize={'16px'}
+                fontFamily='Poppins'
+                fontWeight={400}
+                lineHeight='24px'
+                rounded={'8px'}
+                color={'#0F0F0F'}
+                colorScheme='whiteAlpha'
               >
-              Capturar!
-            </Button>
+                Capturar!
+              </Button>
+              <ModalCatch />          
+            </>
           ) : (
-            <Button
-              onClick={() => removeFromPokedex(currentPokemon)}
-              cursor={"pointer"}
-              width='100%'
-              alignSelf={'flex-end'}
-              justifyContent={"center"}
-              fontSize={'16px'}
-              fontFamily='Poppins'
-              fontWeight={400}
-              lineHeight='24px'
-              rounded={'8px'}
-              // bg={'#FF6262'}
-              colorScheme='red'
-              // color={'#0F0F0F'}
+            <>
+              <Button
+                onClick={() => removeFromPokedex(currentPokemon.name)}
+                cursor={"pointer"}
+                width='100%'
+                alignSelf={'flex-end'}
+                justifyContent={"center"}
+                fontSize={'16px'}
+                fontFamily='Poppins'
+                fontWeight={400}
+                lineHeight='24px'
+                rounded={'8px'}
+                colorScheme='red'
               >
-              Excluir
-            </Button>
+                Excluir
+              </Button>
+              <ModalRelease/>
+            </>
           )
           }
 
         </Box>
       </Box>
+      </Skeleton>
     </Flex>
+    </ScaleFade>
   );
 }
