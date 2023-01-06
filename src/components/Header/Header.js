@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { HeaderContainer } from "./Header.Style"
 import logo from "../../assets/pokemon-logo.svg"
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { goToPokemonListPage, goToPokedexPage } from '../../Router/coordinates';
+import { goToPokemonListPage, goToPokedexPage } from '../../router/coordinates';
 import { GlobalContext } from '../../contexts/GlobalContext';
 import { ArrowLeftIcon } from '@chakra-ui/icons'
 import { ModalCatch } from '../Modal/ModalCatch';
