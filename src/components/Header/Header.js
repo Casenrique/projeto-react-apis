@@ -6,14 +6,15 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { goToPokemonListPage, goToPokedexPage } from '../../Router/coordinates';
 import { GlobalContext } from '../../contexts/GlobalContext';
 import { ArrowLeftIcon } from '@chakra-ui/icons'
-
+import { ModalCatch } from '../Modal/ModalCatch';
+import { ModalRelease } from '../Modal/ModalRelease';
 
 
 const Header = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const context = useContext(GlobalContext)
-  const { pokelist, pokedex, addToPokedex, removeFromPokedex } = context
+  const { pokedex, addToPokedex, removeFromPokedex, removeAllFromPokedex } = context
   const params = useParams()
 
   const renderHeader = () => {
@@ -38,34 +39,38 @@ const Header = () => {
           <>
             <Button variant={'ghost'} fontSize={"2xl"} fontWeight={'bold'} colorScheme={'gray'} leftIcon={<ArrowLeftIcon />} onClick={() => goToPokemonListPage(navigate)}>Todos Pokémons</Button>
             <img src={logo} />
-            <Button colorScheme='blue'
+            <Button
+            colorScheme='red'
             w={'287px'}
             h={'74px'}
             fontSize="2xl" 
-            visibility={'hidden'} 
-            onClick={() => goToPokedexPage(navigate)}
+            onClick={() => removeAllFromPokedex()}
             >
-              POKÉDEX
+              Libertar todos Pokémons
             </Button>
+            <ModalRelease/>
           </>
         )
       case `/details/${params.pokemonName}`:
         return (
-          <>
-          
+          <>          
             <Button variant={'ghost'} fontSize={"2xl"} fontWeight={'bold'} colorScheme={'gray'} leftIcon={<ArrowLeftIcon />} onClick={() => goToPokemonListPage(navigate)}>Todos Pokémons</Button>
             <img src={logo} />
             {pokedex.includes(params.pokemonName) ?
+            <>
+              <Button 
+                colorScheme='red'
+                w={'287px'}
+                h={'74px'}
+                fontSize="2xl" 
+                onClick={() => removeFromPokedex(params.pokemonName)}
+                >
+                  Remover da Pokédex
+                </Button>
+                <ModalCatch/>
+              </>
+            : <>
             <Button 
-              colorScheme='red'
-              w={'287px'}
-              h={'74px'}
-              fontSize="2xl" 
-              onClick={() => removeFromPokedex(params.pokemonName)}
-              >
-                Remover da Pokédex
-              </Button>
-            : <Button 
               colorScheme='blue'
               w={'287px'}
               h={'74px'}
@@ -74,9 +79,9 @@ const Header = () => {
               >
                 Capturar!
               </Button>
-
+              <ModalRelease/>
+          </>
           }
-
           </>
         )
       case "*":
@@ -93,20 +98,9 @@ const Header = () => {
             <Button variant={'ghost'} fontSize={"2xl"} fontWeight={'bold'} colorScheme={'gray'} leftIcon={<ArrowLeftIcon />} onClick={() => goToPokemonListPage(navigate)}>Todos Pokémons</Button>
             <img src={logo} />
             <Button colorScheme='red' onClick={() => removeFromPokedex(pokedex.name)}>Remover da Pokédex</Button>
-
           </>
         )
-      // default:
-      //   return (
-      //     <>
-      //       <Button variant={'ghost'} fontSize={"2xl"} fontWeight={'bold'} colorScheme={'gray'} leftIcon={<ArrowLeftIcon />} onClick={() => goToPokemonListPage(navigate)}>Todos Pokémons</Button>
-      //       <img src={logo} />
-      //       <Button
-      //         onClick={() => goToPokedexPage(navigate)}
-      //         colorScheme='blue'
-      //       >POKÉDEX</Button>
-      //     </>
-      //   )
+     
     }
 
 

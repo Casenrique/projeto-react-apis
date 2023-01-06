@@ -8,6 +8,10 @@ export const GlobalStyle = createGlobalStyle`
 
     }
 
+    body {
+        background-color: #5E5E5E;
+        min-height: 100vh;
+    }
 
 
 `

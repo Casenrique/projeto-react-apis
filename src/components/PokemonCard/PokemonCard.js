@@ -5,44 +5,43 @@ import {
   Button,
   Link,
   Image,
-  Skeleton,
-  SkeletonCircle,
-  SkeletonText,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure
+  ScaleFade,
+  Skeleton  
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CardBackground from "../../assets/pokeball.svg"
 import { searchPokemonTypes } from '../../utils/SearchPokemonTypes';
 import { searchCardColor } from '../../utils/SearchCardColor';
 import { goToDetailPage } from '../../Router/coordinates';
+import { GlobalContext } from '../../contexts/GlobalContext';
+import { ModalCatch } from '../Modal/ModalCatch'
+import { ModalRelease } from '../Modal/ModalRelease';
 
 
 export default function PokemonCard({ urlPokemon, addToPokedex, removeFromPokedex }) {
 
   const [currentPokemon, setCurrentPokemon] = useState({})
+  const [ isLoading, setIsLoading ] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
 
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const context = useContext(GlobalContext)
+  // const { isOpen, setIsOpen, onClose } = context
 
   const fetchCurrentPokemon = async () => {
     try {
+      setIsLoading(true)
       const response = await axios.get(urlPokemon)
       console.log(response.data)
       // console.log(response.data.types[0].type.name)
       // console.log(response.data.types[1]?.type.name)
       console.log(response.data.moves)
       setCurrentPokemon(response.data)
+      setIsLoading(false)
     } catch (error) {
+      setIsLoading(false)
       console.log("Problemas na busca da lista de pokemons")
       console.log(error)
     }
@@ -53,7 +52,14 @@ export default function PokemonCard({ urlPokemon, addToPokedex, removeFromPokede
     searchCardColor()
   }, [])
   return (
+    <ScaleFade initialScale={0.9} in={true}>
     <Flex padding={'25px'}>
+    <Skeleton
+        isLoaded={!isLoading}
+        w={"100%"}
+        boxShadow={'2xl'}
+        rounded={'lg'}
+    >
       <Box
         maxW={'440px'}
         minW={'400px'}
@@ -70,16 +76,14 @@ export default function PokemonCard({ urlPokemon, addToPokedex, removeFromPokede
         bgSize={"auto"}
         bgRepeat={"no-repeat"}
       >
-
         <Box flexGrow={1} align={'left'} justify={'space-between'} flexDirection={'column'} display={"flex"} >
-          <SkeletonText isLoaded mt='4' noOfLines={4} spacing='4' skeletonHeight='2' />
           <Text fontFamily='Inter' fontSize='16px' fontStyle="normal" fontWeight={'700'} lineHeight='19px' color='#FFFFFF'>
             #0{currentPokemon.id}
           </Text>
           <Text fontFamily='Inter' fontSize='32px' fontStyle="normal" fontWeight={'700'} lineHeight='39px' color='#FFFFFF' marginBottom={'10px'}>
             {currentPokemon.name && (currentPokemon.name.charAt(0)?.toUpperCase() + currentPokemon.name.slice(1))}
           </Text>
-          <Box marginBottom={'30px'} display={'flex'} gap={'5px'}>
+          <Box marginBottom={'50px'} display={'flex'} gap={'5px'}>
             <Image src={currentPokemon.types && searchPokemonTypes(currentPokemon.types[0].type.name)} alt={''} />
             <Image src={currentPokemon.types && searchPokemonTypes(currentPokemon.types[1]?.type?.name)} alt={''} />
           </Box>
@@ -88,7 +92,6 @@ export default function PokemonCard({ urlPokemon, addToPokedex, removeFromPokede
           </Link>
         </Box>
         <Box flexGrow={1} display={'flex'} >
-          <SkeletonCircle isLoaded size={'10'} />
           <Image
             boxSize={193}
             position="absolute"
@@ -100,11 +103,12 @@ export default function PokemonCard({ urlPokemon, addToPokedex, removeFromPokede
           {location.pathname === "/" ? (
             <>
               <Button
-                onClick={() => addToPokedex(currentPokemon.name)}
+                onClick={()=> addToPokedex(currentPokemon.name)
+                               
+                }
                 cursor={"pointer"}
                 width='100%'
                 alignSelf={'flex-end'}
-                // textAlign='center'
                 justifyContent={"center"}
                 fontSize={'16px'}
                 fontFamily='Poppins'
@@ -116,44 +120,34 @@ export default function PokemonCard({ urlPokemon, addToPokedex, removeFromPokede
               >
                 Capturar!
               </Button>
-              <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>Modal Title</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>
-TESTE                  </ModalBody>
-
-                  <ModalFooter>
-                    <Button colorScheme='blue' mr={3} onClick={onClose}>
-                      Close
-                    </Button>
-                    <Button variant='ghost'>Secondary Action</Button>
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
+              <ModalCatch />          
             </>
           ) : (
-            <Button
-              onClick={() => removeFromPokedex(currentPokemon.name)}
-              cursor={"pointer"}
-              width='100%'
-              alignSelf={'flex-end'}
-              justifyContent={"center"}
-              fontSize={'16px'}
-              fontFamily='Poppins'
-              fontWeight={400}
-              lineHeight='24px'
-              rounded={'8px'}
-              colorScheme='red'
-            >
-              Excluir
-            </Button>
+            <>
+              <Button
+                onClick={() => removeFromPokedex(currentPokemon.name)}
+                cursor={"pointer"}
+                width='100%'
+                alignSelf={'flex-end'}
+                justifyContent={"center"}
+                fontSize={'16px'}
+                fontFamily='Poppins'
+                fontWeight={400}
+                lineHeight='24px'
+                rounded={'8px'}
+                colorScheme='red'
+              >
+                Excluir
+              </Button>
+              <ModalRelease/>
+            </>
           )
           }
 
         </Box>
       </Box>
+      </Skeleton>
     </Flex>
+    </ScaleFade>
   );
 }

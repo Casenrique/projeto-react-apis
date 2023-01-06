@@ -3,14 +3,12 @@ import {
   Box,
   Center,
   Flex,
-  Text,
-  Stack,
-  Button,
-  Link,
+  Text,  
   Image,
   HStack,
   Progress,
-  VStack,
+  ScaleFade,
+  Skeleton
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
@@ -25,6 +23,7 @@ import { GlobalContext } from '../../contexts/GlobalContext';
 export default function PokeDetailsCard({ addToPokedex, removeFromPokedex }) {
 
   const [currentPokemon, setCurrentPokemon] = useState({})
+  const [ isLoading, setIsLoading ] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
   const params = useParams()
@@ -34,27 +33,41 @@ export default function PokeDetailsCard({ addToPokedex, removeFromPokedex }) {
   
   const fetchCurrentPokemon = async () => {
     try {
+      setIsLoading(true)
       const response = await axios.get(`${BASE_URL}/pokemon/${params.pokemonName}`)
       console.log(response.data)
       console.log(response.data.moves[0].move.name)
+      console.log(response.data.stats)
       setCurrentPokemon(response.data)
+      setIsLoading(false)
     } catch (error) {
+      setIsLoading(false)
       console.log("Problemas na busca da lista de pokemons")
       console.log(error)
     }
   }
+
+  // const totalStats = currentPokemon.stats.reduce(
+  //   (acc, stats) => stats.base_stat + acc
+  // )
+
+  // console.log(totalStats)
   
   useEffect(() => {
     fetchCurrentPokemon()
   }, [])
 
   return (
+    <ScaleFade initialScale={0.9} in={true}>
+
     <Flex padding={'25px'} flexDirection={'column'}>
+      <Skeleton
+        isLoaded={!isLoading}
+        rounded={'lg'}
+      >
       <Box
-        // maxW={'1389px'}
         minW={'1389px'}
         h={'663px'}
-        // marginTop={'50px'}
         boxShadow={'2xl'}
         rounded={'lg'}
         p={'16px'}
@@ -93,11 +106,23 @@ export default function PokeDetailsCard({ addToPokedex, removeFromPokedex }) {
                 <Text flexGrow={0} fontSize={10} alignSelf={"flex-end"}>
                   {currentPokemon.stats && currentPokemon.stats[index]['base_stat']}
                 </Text>
-                <Progress maxW={'200px'} flexGrow={2} value={currentPokemon.stats && currentPokemon.stats[index]['base_stat']} size={'lg'} >{currentPokemon.stats && currentPokemon.stats[index]['base_stat']}</Progress>
+                <Progress 
+                  maxW={'200px'} 
+                  flexGrow={2} 
+                  size={'lg'}
+                  rounded={"md"} 
+                  value={currentPokemon.stats && currentPokemon.stats[index]['base_stat']} 
+                  colorScheme={stats.base_stat < 50 ? "orange" : stats.base_stat < 80 ? "yellow" : "green"}
+                  >
+                    {currentPokemon.stats && currentPokemon.stats[index]['base_stat']}
+                  </Progress>
+                  
               </HStack>
               ))
             }   
-            <hr/>         
+            <hr/>
+             
+                   
           </Box>          
         </Box>
         <Box display={'flex'} >
@@ -149,6 +174,9 @@ export default function PokeDetailsCard({ addToPokedex, removeFromPokedex }) {
           </Box>
         </Box>
       </Box>
+      </Skeleton>
     </Flex>
+    </ScaleFade>
+
   );
 }

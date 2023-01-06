@@ -4,6 +4,8 @@ import { BASE_URL } from "./constants/url";
 import Router from "./Router/Router";
 import axios from "axios";
 import { GlobalContext } from "./contexts/GlobalContext";
+import  { ModalCatch } from "./components/Modal/ModalCatch"
+
 
 
 
@@ -11,6 +13,9 @@ function App() {
 
   const [ pokelist, setPokelist ] = useState([])
   const [ pokedex, setPokedex ] = useState([])
+  const [ isLoading, setIsLoading ] = useState(false)
+  // const { isOpen, onOpen, onClose } = useDisclosure()
+  const [ isOpen, setIsOpen ] = useState(false)
 
   useEffect(() => {
     fetchPokemonList()
@@ -18,27 +23,32 @@ function App() {
 
   const fetchPokemonList = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/pokemon/?limit=20&offset=150`, 
+      setIsLoading(true)
+      const response = await axios.get(`${BASE_URL}/pokemon/?limit=151&offset=151`, 
       // const response = await axios.get(`${BASE_URL}/?limit=150&offset=150`, 
       )
       console.log(response.data)
       setPokelist(response.data.results)
+      setIsLoading(false)
     } catch(error) {
+      setIsLoading(false)
       console.log("Erro ao buscar lista de pokemons");
       console.log(error.response)
     }
   } 
   const addToPokedex = (pokemonToAdd) => {
+    const newPokedex = [...pokedex]
     const pokemonSearchOnPokedex = pokedex.find(
       (pokemonInPokedex) => pokemonInPokedex.name === pokemonToAdd
     )
     if(!pokemonSearchOnPokedex) {
-        const newPokedex = [...pokedex, pokemonToAdd]
+        newPokedex.push(pokemonToAdd)
         setPokedex(newPokedex)
     }
     console.log(pokedex)
-    alert(`Gotcha! ${pokemonToAdd} foi adicionado à sua Pokedex` )
-    const pokedexStringify = JSON.stringify(pokedex)
+    setIsOpen(true)
+    // alert(`Gotcha! ${pokemonToAdd} foi adicionado à sua Pokedex` )
+    const pokedexStringify = JSON.stringify(newPokedex)
     window.localStorage.setItem('pokemons', pokedexStringify)
   }
 
@@ -48,7 +58,17 @@ function App() {
     )
     console.log(newPokedex)    
     setPokedex(newPokedex)
-    alert(`Oh, no! ${pokemonToRemove} foi removido da sua Pokedex` )
+    setIsOpen(true)
+    // alert(`Oh, no! ${pokemonToRemove} foi removido da sua Pokedex` )
+    const pokedexStringify = JSON.stringify(newPokedex)
+    window.localStorage.setItem('pokemons', pokedexStringify)
+  }
+
+  const removeAllFromPokedex = () => {
+    const newPokedex = []
+    setPokedex(newPokedex)
+    window.localStorage.removeItem('pokemons')
+    setIsOpen(true)
   }
 
   const savePokedex = () => {
@@ -70,7 +90,12 @@ function App() {
     setPokedex,
     addToPokedex,
     removeFromPokedex,
+    removeAllFromPokedex,
     BASE_URL,
+    isOpen,
+    setIsOpen,
+    // onOpen,
+    // onClose
   }
 
   // console.log(context)

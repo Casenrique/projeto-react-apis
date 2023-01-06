@@ -30,7 +30,7 @@ const addIfisNotInPokedex = (pokemonToAdd) => {
           removeFromPokedex={removeFromPokedex}
           />
           <ContainerCard>
-            <Heading alignSelf={'flex-start'} mt={8} p={16} ml={10} fontSize={"5xl"} fontFamily={'Poppins'} color={'white'} >Detalhes</Heading>
+            <Heading alignSelf={'flex-start'} p={16} ml={10} fontSize={"6xl"} fontFamily={'Poppins'} color={'white'} fontWeight={'bold'} >Detalhes</Heading>
             
                 <PokeDetailsCard />
           </ContainerCard>
