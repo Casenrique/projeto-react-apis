@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ChakraProvider } from '@chakra-ui/react'
 import { BASE_URL } from "./constants/url";
-import Router from "./Router/Router";
+import Router from "./router/Router";
 import axios from "axios";
 import { GlobalContext } from "./contexts/GlobalContext";
 import  { ModalCatch } from "./components/Modal/ModalCatch"
