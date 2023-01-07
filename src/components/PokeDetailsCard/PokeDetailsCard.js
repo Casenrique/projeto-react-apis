@@ -71,8 +71,7 @@ export default function PokeDetailsCard({ addToPokedex, removeFromPokedex }) {
         boxShadow={'2xl'}
         rounded={'lg'}
         p={'16px'}
-        display='flex'
-        
+        display='flex'        
         position={'relative'}
         bg={currentPokemon.types && searchCardColor(currentPokemon.types[0]?.type?.name)}
         bgImage={CardBackground}
@@ -99,7 +98,7 @@ export default function PokeDetailsCard({ addToPokedex, removeFromPokedex }) {
             {
               currentPokemon.stats && currentPokemon.stats
               .map((stats, index) => (
-              <HStack spacing={'5px'} my={'0.5'} display='flex' padding={1} justifyContent={'flex-end'}>
+              <HStack key={currentPokemon.stats} spacing={'5px'} my={'0.5'} display='flex' padding={1} justifyContent={'flex-end'}>
                 <Text as='p' flexGrow={0} fontSize={10}>
                   {currentPokemon.stats && currentPokemon.stats[index].stat.name.toUpperCase()}
                 </Text>
@@ -116,13 +115,19 @@ export default function PokeDetailsCard({ addToPokedex, removeFromPokedex }) {
                   >
                     {currentPokemon.stats && currentPokemon.stats[index]['base_stat']}
                   </Progress>
-                  
               </HStack>
               ))
             }   
-            <hr/>
-             
-                   
+            <hr/>    
+            <HStack pacing={'5px'} my={'0.5'} display='flex' padding={1} >             
+              <Text as='p' flexGrow={0} fontSize={16}>
+                Total Stats
+              </Text>
+              <Text as='p' flexGrow={0} fontSize={16} fontWeight='bold'>
+                {currentPokemon.stats && currentPokemon.stats.reduce((acc, stat) => acc + stat.base_stat, 0)}
+              </Text>
+            </HStack> 
+            <hr/>                   
           </Box>          
         </Box>
         <Box display={'flex'} >
