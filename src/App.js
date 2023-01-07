@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ChakraProvider } from '@chakra-ui/react'
 import { BASE_URL } from "./constants/url";
-import Router from "./router/Router";
+import Router from "./routes/Router";
 import axios from "axios";
 import { generations } from "./utils/SearchGen"
 import { GlobalContext } from "./contexts/GlobalContext";

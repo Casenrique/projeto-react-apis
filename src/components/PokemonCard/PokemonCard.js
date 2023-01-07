@@ -14,7 +14,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import CardBackground from "../../assets/pokeball.svg"
 import { searchPokemonTypes } from '../../utils/SearchPokemonTypes';
 import { searchCardColor } from '../../utils/SearchCardColor';
-import { goToDetailPage } from '../../router/coordinates';
+import { goToDetailPage } from '../../routes/coordinates';
 import { GlobalContext } from '../../contexts/GlobalContext';
 import { ModalCatch } from '../Modal/ModalCatch'
 import { ModalRelease } from '../Modal/ModalRelease';

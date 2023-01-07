@@ -1,3 +1,89 @@
+# Projeto React e API's
+
+![Pokémon](./src/assets/pokemon-logo.svg)
+<br>
+Embarque nessa aventura Pokémon, capturando seus pokémons favoritos das nove gerações e seja o maior mestre pokémon de todos. Projeto de finalização do módulo de Front end com utilização do React e suas bibliotecas. na Labenu.
+
+## Índice
+- <a href="#funcionalidades">Funcionalidades do Projeto</a>
+- <a href="#layout">Layout</a>
+- <a href="#rodar">Como rodar esse projeto</a>
+- <a href="#tecnologias">Tecnologias utilizadas</a>
+- <a href="#autoras">Pessoas autoras</a>
+- <a href="#passos">Próximos passos</a>
+
+## Funcionalidades
+
+- [x] Filtro da lista de pokémons por nome
+- [x] Ordenação do catálogo por ordem alfabética do nome do pokémon crescente e decrescente
+- [x] Ordenação do catálogo por ordem  do nome da nave crescente e decrescente
+- [x] Layout da lista de pokémons
+- [x] Layout da pokédex dos pokémons capturados
+- [x] Layout da página de detalhes dos pokémons com suas habilidades e seus status
+
+## Layout
+
+![Página da Lista de Pokémons](./src/assets/pokelistpage.png)
+![Página da Pokédex](./src/assets/pokedexpage.png)
+![Página dos Detalhes do Pokémon](./src/assets/pokedetailspage.png)
+![Página dos Detalhes do Pokémon](./src/assets/pokedetailspage2.png)
+
+## Demonstração
+[Link Demonstração](https://projeto-frontendreact-nu.vercel.app/)
+
+## Como rodar esse projeto
+
+```bash
+# Clone esse repositório
+$ git clone linkrepo
+
+# Acesse a pasta do projeto no seu terminal
+$ cd projeto-react-apis
+
+# Instale as dependências
+$ npm install
+
+# Execute a aplicação
+$ npm start
+
+# A aplicação será iniciada na porta 3000, acesse pelo navegador:
+http://localhost:3000
+```
+
+## Tecnologias utilizadas
+
+1. [React](https://reactjs.org/)
+2. [React Router](https://reactrouter.com/en/main)
+3. [React Context ](https://reactjs.org/docs/context.html)
+4. [Axios](https://axios-http.com/ptbr/docs/intro)
+5. [Styled-components](https://styled-components.com/)
+6. [Chakra-UI](https://chakra-ui.com/)
+7. [PokéAPI](https://pokeapi.co/)
+
+## Pessoas Autoras
+
+<img style="width:200px" src="https://github.com/Casenrique.png" alt="Imagem do desenvolvedor">
+
+[Linkedin](https://www.linkedin.com/in/carlos-henrique-de-souza-1767311a/)
+
+## Próximos passos
+
+- [ ] Filtro por ID
+- [ ] Filtro por tipo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # **Projeto React e API's**
 O Projeto React e APIs é um site de pokémons que possui três páginas: Home, Pokedex e Detalhes. O projeto está subdivido em temas de acordo com os conteúdos que estudado durante o Módulo 2 - Frontend.
 
