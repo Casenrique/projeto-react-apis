@@ -9,7 +9,7 @@ import { PokedexContainer, ContainerCards } from './PokedexPage.style'
 const PokedexPage = () => {
   const context = useContext(GlobalContext)
   const { pokedex, removeFromPokedex } = context
-  console.log(pokedex)
+
   return (
     <>
       <Header/>

@@ -11,17 +11,17 @@ const context = useContext(GlobalContext)
 const { pokelist, pokedex, setPokedex, addToPokedex, removeFromPokedex } = context
 const params = useParams()
 
-const addIfisNotInPokedex = (pokemonToAdd) => {
+// const addIfisNotInPokedex = (pokemonToAdd) => {
 
-  const newPokedex = [...pokedex]
-  const pokemonSearch = newPokedex.find(
-    (pokemonInPokedex) => pokemonInPokedex.name === pokemonToAdd.name
-  )
-    if(!pokemonSearch) {
-      const newPokedex = [...pokedex, pokemonToAdd]
-      setPokedex(newPokedex)
-    }
-  }
+//   const newPokedex = [...pokedex]
+//   const pokemonSearch = newPokedex.find(
+//     (pokemonInPokedex) => pokemonInPokedex.name === pokemonToAdd.name
+//   )
+//     if(!pokemonSearch) {
+//       const newPokedex = [...pokedex, pokemonToAdd]
+//       setPokedex(newPokedex)
+//     }
+//   }
 
   return (
     <>

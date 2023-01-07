@@ -34,10 +34,7 @@ export default function PokemonCard({ urlPokemon, addToPokedex, removeFromPokede
     try {
       setIsLoading(true)
       const response = await axios.get(urlPokemon)
-      console.log(response.data)
-      // console.log(response.data.types[0].type.name)
-      // console.log(response.data.types[1]?.type.name)
-      console.log(response.data.moves)
+      // console.log(response.data)
       setCurrentPokemon(response.data)
       setIsLoading(false)
     } catch (error) {
@@ -78,7 +75,7 @@ export default function PokemonCard({ urlPokemon, addToPokedex, removeFromPokede
       >
         <Box flexGrow={1} align={'left'} justify={'space-between'} flexDirection={'column'} display={"flex"} >
           <Text fontFamily='Inter' fontSize='16px' fontStyle="normal" fontWeight={'700'} lineHeight='19px' color='#FFFFFF'>
-            #0{currentPokemon.id}
+            #{currentPokemon.id}
           </Text>
           <Text fontFamily='Inter' fontSize='32px' fontStyle="normal" fontWeight={'700'} lineHeight='39px' color='#FFFFFF' marginBottom={'10px'}>
             {currentPokemon.name && (currentPokemon.name.charAt(0)?.toUpperCase() + currentPokemon.name.slice(1))}
