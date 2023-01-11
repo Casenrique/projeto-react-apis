@@ -29,7 +29,7 @@ Embarque nessa aventura Pokémon, capturando seus pokémons favoritos das nove g
 ![Página dos Detalhes do Pokémon](./src/assets/pokedetailspage2.png)
 
 ## Demonstração
-[Link Demonstração](https://projeto-frontendreact-nu.vercel.app/)
+[Link Demonstração](https://projeto-react-apis-eta.vercel.app/)
 
 ## Como rodar esse projeto
 
