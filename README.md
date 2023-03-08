@@ -2,7 +2,7 @@
 
 ![Pokémon](./src/assets/pokemon-logo.svg)
 <br>
-Embarque nessa aventura Pokémon, capturando seus pokémons favoritos das nove gerações e seja o maior mestre pokémon de todos. Projeto de finalização do módulo de Front end com utilização do React e suas bibliotecas. na Labenu.
+Embarque nessa aventura Pokémon, capturando seus pokémons favoritos das nove gerações e seja o maior mestre pokémon de todos. Projeto de finalização do módulo de Front end com utilização do React e suas bibliotecas na Labenu.
 
 ## Índice
 - <a href="#funcionalidades">Funcionalidades do Projeto</a>
